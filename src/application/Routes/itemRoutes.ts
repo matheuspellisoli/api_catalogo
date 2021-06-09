@@ -36,7 +36,12 @@ export class ItemRoutes extends Routes {
         })
         .get((req: express.Request, res: express.Response) => {
             let id = Number(`${req.params.itemID}`);
-            res.status(200).send(this.itemService.findById(id));
+            let item = this.itemService.findById(id);
+
+            if(item)
+                res.status(200).send(item);
+
+            res.status(404).send('resource not found');
         })
         .put((req: express.Request, res: express.Response) => {           
             let item = new Item(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);                

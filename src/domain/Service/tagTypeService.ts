@@ -1,7 +1,7 @@
 import {TagType} from "../Model/tagType";
 import {TagTypesRepository} from "../interfaces/tagTypesRepository";
 
-class TagTypeService {
+export class TagTypeService {
 
   repository : TagTypesRepository;
 
@@ -9,19 +9,19 @@ class TagTypeService {
     this.repository = repository;
   }
 
-  findAll = async (tagType: TagType): Promise<TagType[]> => {
+  findAll =  (): TagType[] => {
     return this.repository.findAll();
   };
 
-  findById = async (id: number): Promise<TagType> => {
+  findById =  (id: number): TagType => {
     return this.repository.findById(id);
   };
 
-  create = async (tagType: TagType): Promise<TagType> => {
+  create =  (tagType: TagType): TagType => {
     return this.repository.create(tagType);
   };
 
-  update = async (tagType: TagType): Promise<TagType | null> => {
+  update =  (tagType: TagType): TagType => {
 
     if(tagType.id == null)
       return null;
@@ -29,7 +29,7 @@ class TagTypeService {
     return this.repository.update(tagType)
   };
 
-  delete = async (id: number): Promise<null | void> => {
-    this.repository.delete(id)
+  delete =  (id: number): Boolean => {
+    return this.repository.delete(id)
   };
 }

@@ -1,9 +1,9 @@
 import {Tag} from "../Model/tag" 
 
 export interface TagRepository{
-    findAll(): Promise<Tag[]>;
-    findById(id: number): Promise<Tag>;
-    create(item: Tag): Promise<Tag>;
-    update(item: Tag): Promise<Tag>;
-    delete(id: number): Promise<boolean>;
+    findAll(): Tag[];
+    findById(id: number): Tag;
+    create(item: Tag): Tag;
+    update(item: Tag): Tag;
+    delete(id: number): Boolean;
 }
