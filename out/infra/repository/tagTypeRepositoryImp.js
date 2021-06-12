@@ -5,8 +5,8 @@ var tagType_1 = require("../../domain/Model/tagType");
 var TagTypeRepositoryImp = /** @class */ (function () {
     function TagTypeRepositoryImp() {
         this.items = [
-            new tagType_1.TagType(1, "Cor", true, false, "", true),
-            new tagType_1.TagType(2, "Tamanho", true, true, "P,M,G,GG", true)
+            new tagType_1.TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "Cor", true, false, "", true),
+            new tagType_1.TagType("bf97d25a-36b9-40d7-83f1-809469de3ce4", "Tamanho", true, true, "P,M,G,GG", true)
         ];
     }
     TagTypeRepositoryImp.prototype.findAll = function () {

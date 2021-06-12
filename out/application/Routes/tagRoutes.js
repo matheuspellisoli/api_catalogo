@@ -19,6 +19,7 @@ exports.TagRoutes = void 0;
 var routes_1 = require("./routes");
 var tagDTO_1 = require("../dto/tagDTO");
 var tagConverter_1 = require("../converter/tagConverter");
+var uuid_1 = require("uuid");
 var TagRoutes = /** @class */ (function (_super) {
     __extends(TagRoutes, _super);
     function TagRoutes(app, tagService) {
@@ -35,7 +36,7 @@ var TagRoutes = /** @class */ (function (_super) {
         })
             .post(function (req, res) {
             try {
-                var tag = new tagDTO_1.TagDTO(null, req.body.description, req.body.type, req.body.active);
+                var tag = new tagDTO_1.TagDTO(uuid_1.v4(), req.body.value, req.body.type, req.body.active);
                 tag = _this.tagCoverter.toDTO(_this.tagService.create(_this.tagCoverter.toModel(tag)));
                 res.status(200).send(tag);
             }
@@ -45,25 +46,22 @@ var TagRoutes = /** @class */ (function (_super) {
         });
         this.app.route("/api/tag/:id")
             .all(function (req, res, next) {
-            var id = Number("" + req.params.id);
-            if (id == NaN)
-                res.status(400).send('id required');
             next();
         })
             .get(function (req, res) {
-            var id = Number("" + req.params.id);
+            var id = "" + req.params.id;
             var item = _this.tagService.findById(id);
             if (item)
                 res.status(200).send(item);
             res.status(404).send('resource not found');
         })
             .put(function (req, res) {
-            var tag = new tagDTO_1.TagDTO(req.body.id, req.body.description, req.body.type, req.body.active);
+            var tag = new tagDTO_1.TagDTO(req.body.id, req.body.value, req.body.type, req.body.active);
             tag = _this.tagCoverter.toDTO(_this.tagService.create(_this.tagCoverter.toModel(tag)));
             res.status(200).send(tag);
         })
             .delete(function (req, res) {
-            var id = Number("" + req.params.id);
+            var id = "" + req.params.id;
             _this.tagService.delete(id);
             res.status(200).send("DELETE requested for id " + req.params.id);
         });

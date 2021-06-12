@@ -19,6 +19,7 @@ exports.TagTypeRoutes = void 0;
 var routes_1 = require("./routes");
 var tagTypeDTO_1 = require("../dto/tagTypeDTO");
 var tagTypeConverter_1 = require("../converter/tagTypeConverter");
+var uuid_1 = require("uuid");
 var TagTypeRoutes = /** @class */ (function (_super) {
     __extends(TagTypeRoutes, _super);
     function TagTypeRoutes(app, tagTypeService) {
@@ -35,7 +36,7 @@ var TagTypeRoutes = /** @class */ (function (_super) {
         })
             .post(function (req, res) {
             try {
-                var tagType = new tagTypeDTO_1.TagTypeDTO(null, req.body.description, req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);
+                var tagType = new tagTypeDTO_1.TagTypeDTO(uuid_1.v4(), req.body.description, req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);
                 tagType = _this.tagTypeConvert.toDTO(_this.tagTypeService.create(_this.tagTypeConvert.toModel(tagType)));
                 res.status(200).send(tagType);
             }
@@ -45,13 +46,10 @@ var TagTypeRoutes = /** @class */ (function (_super) {
         });
         this.app.route("/api/tagtype/:id")
             .all(function (req, res, next) {
-            var id = Number("" + req.params.id);
-            if (id == NaN)
-                res.status(400).send('id required');
             next();
         })
             .get(function (req, res) {
-            var id = Number("" + req.params.id);
+            var id = "" + req.params.id;
             var tagType = _this.tagTypeService.findById(id);
             if (tagType)
                 res.status(200).send(tagType);
@@ -63,7 +61,7 @@ var TagTypeRoutes = /** @class */ (function (_super) {
             res.status(200).send(tagType);
         })
             .delete(function (req, res) {
-            var id = Number("" + req.params.id);
+            var id = "" + req.params.id;
             _this.tagTypeService.delete(id);
             res.status(200).send("DELETE requested for id " + req.params.id);
         });

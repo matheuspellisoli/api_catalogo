@@ -3,6 +3,7 @@ import {TagTypeService} from "../../domain/Service/tagTypeService"
 import {TagTypeDTO} from '../dto/tagTypeDTO'
 import express from 'express';
 import { TagTypeConverter } from '../converter/tagTypeConverter';
+import {v4 as uuidv4} from 'uuid';
 
 export class TagTypeRoutes extends Routes {
     private tagTypeService : TagTypeService;
@@ -23,7 +24,7 @@ export class TagTypeRoutes extends Routes {
             
             try {  
                 
-                let tagType = new TagTypeDTO(null, req.body.description,req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);                
+                let tagType = new TagTypeDTO(uuidv4(), req.body.description,req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);                
                 tagType = this.tagTypeConvert.toDTO(this.tagTypeService.create(this.tagTypeConvert.toModel(tagType)))
                 res.status(200).send(tagType);              
               } catch (e) {
@@ -33,13 +34,10 @@ export class TagTypeRoutes extends Routes {
 
         this.app.route(`/api/tagtype/:id`)
         .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            let id = Number(`${req.params.id}`);
-            if(id == NaN)
-            res.status(400).send('id required');
             next();
         })
         .get((req: express.Request, res: express.Response) => {
-            let id = Number(`${req.params.id}`);
+            let id = `${req.params.id}`;
             let tagType = this.tagTypeService.findById(id);
 
             if(tagType)
@@ -53,7 +51,7 @@ export class TagTypeRoutes extends Routes {
             res.status(200).send(tagType);
         })
         .delete((req: express.Request, res: express.Response) => {
-            let id = Number(`${req.params.id}`);
+            let id = `${req.params.id}`;
             this.tagTypeService.delete(id)
             res.status(200).send(`DELETE requested for id ${req.params.id}`);
         });

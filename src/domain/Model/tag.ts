@@ -1,18 +1,18 @@
 import {TagType} from "./tagType"
 export class Tag {
-  private id: number;
+  private id: string;
   private value: string;
   private type: TagType;
   private active: Boolean;
 
-  constructor(id: number, value: string, type: TagType, active: Boolean){
+  constructor(id: string, value: string, type: TagType, active: Boolean){
     this.id = id;
     this.value = value;
     this.type = type;
     this.active = active;
   }
 
-  getId(): number {
+  getId(): string {
     return this.id;
   }
 

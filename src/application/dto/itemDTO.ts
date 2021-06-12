@@ -1,7 +1,7 @@
 import {TagDTO} from "./tagDTO";
 
 export class ItemDTO{
-    id: number;
+    id: string;
     title: string;
     description: string;
     price: number;
@@ -9,7 +9,7 @@ export class ItemDTO{
     images: string[];
     active: Boolean;
   
-    constructor(id: number,title: string, description: string, price: number, tags: TagDTO[], images: string[], active: Boolean){
+    constructor(id: string,title: string, description: string, price: number, tags: TagDTO[], images: string[], active: Boolean){
       this.id = id;
       this.title = title;
       this.description = description;

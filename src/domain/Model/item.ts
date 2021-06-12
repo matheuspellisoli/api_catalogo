@@ -1,7 +1,7 @@
 import {Tag} from "./tag";
 
 export class Item{
-  private id: number;
+  private id: string;
   private title: string;
   private description: string;
   private price: number;
@@ -9,7 +9,7 @@ export class Item{
   private images: string[];
   private active: Boolean;
 
-  constructor(id: number,title: string, description: string, price: number, tags: Tag[], images: string[], active: Boolean){
+  constructor(id: string,title: string, description: string, price: number, tags: Tag[], images: string[], active: Boolean){
     this.id = id;
     this.title = title;
     this.description = description;
@@ -19,7 +19,7 @@ export class Item{
     this.active = active;
   }
 
-  getId(): number {
+  getId(): string {
     return this.id;
   }
 

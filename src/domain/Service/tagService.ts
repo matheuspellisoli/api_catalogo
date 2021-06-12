@@ -12,7 +12,7 @@ export class TagService {
     return this.repository.findAll();
   };
 
-  findById =  (id: number): Tag => {
+  findById =  (id: string): Tag => {
     return this.repository.findById(id);
   };
 
@@ -27,7 +27,7 @@ export class TagService {
     return this.repository.update(tag)
   };
 
-  delete =  (id: number): Boolean => {
+  delete =  (id: string): Boolean => {
     return this.repository.delete(id)
   };
 }

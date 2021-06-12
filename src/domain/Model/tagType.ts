@@ -1,12 +1,12 @@
 export class TagType {
-  private id: number;
+  private id: string;
   private description: string;
   private visible: Boolean;
   private list?: Boolean;
   private listvalues?: string;
   private active: Boolean;
 
-  constructor(id: number, description: string, visible: Boolean, list: Boolean, listvalues: string, active: Boolean){
+  constructor(id: string, description: string, visible: Boolean, list: Boolean, listvalues: string, active: Boolean){
     this.id = id;
     this.description = description;
     this.visible = visible;
@@ -15,7 +15,7 @@ export class TagType {
     this.active = active;
   }
 
-  getId(): number {
+  getId(): string {
     return this.id;
   }
 

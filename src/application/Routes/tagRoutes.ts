@@ -3,6 +3,7 @@ import {TagService} from "../../domain/Service/tagService"
 import {TagDTO} from '../dto/tagDTO'
 import express from 'express';
 import { TagConverter } from '../converter/tagConverter';
+import {v4 as uuidv4} from 'uuid';
 
 export class TagRoutes extends Routes {
     private tagService : TagService;
@@ -23,7 +24,7 @@ export class TagRoutes extends Routes {
             
             try {  
                 
-                let tag = new TagDTO(null, req.body.description,req.body.type, req.body.active);                
+                let tag = new TagDTO(uuidv4(), req.body.value,req.body.type, req.body.active);                
                 tag = this.tagCoverter.toDTO(this.tagService.create(this.tagCoverter.toModel(tag)))
                 res.status(200).send(tag);              
               } catch (e) {
@@ -33,13 +34,10 @@ export class TagRoutes extends Routes {
 
         this.app.route(`/api/tag/:id`)
         .all((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            let id = Number(`${req.params.id}`);
-            if(id == NaN)
-            res.status(400).send('id required');
             next();
         })
         .get((req: express.Request, res: express.Response) => {
-            let id = Number(`${req.params.id}`);
+            let id = `${req.params.id}`
             let item = this.tagService.findById(id);
 
             if(item)
@@ -48,12 +46,12 @@ export class TagRoutes extends Routes {
             res.status(404).send('resource not found');
         })
         .put((req: express.Request, res: express.Response) => {           
-            let tag = new TagDTO(req.body.id, req.body.description,req.body.type, req.body.active); 
+            let tag = new TagDTO(req.body.id, req.body.value,req.body.type, req.body.active); 
             tag = this.tagCoverter.toDTO(this.tagService.create(this.tagCoverter.toModel(tag)))
             res.status(200).send(tag);
         })
         .delete((req: express.Request, res: express.Response) => {
-            let id = Number(`${req.params.id}`);
+            let id = `${req.params.id}`
             this.tagService.delete(id)
             res.status(200).send(`DELETE requested for id ${req.params.id}`);
         });

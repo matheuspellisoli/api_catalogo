@@ -13,7 +13,7 @@ export class TagTypeService {
     return this.repository.findAll();
   };
 
-  findById =  (id: number): TagType => {
+  findById =  (id: string): TagType => {
     return this.repository.findById(id);
   };
 
@@ -29,7 +29,7 @@ export class TagTypeService {
     return this.repository.update(tagType)
   };
 
-  delete =  (id: number): Boolean => {
+  delete =  (id: string): Boolean => {
     return this.repository.delete(id)
   };
 }

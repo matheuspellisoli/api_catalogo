@@ -12,7 +12,7 @@ export class ItemService {
     return this.repository.findAll();
   };
 
-  findById = (id: number): Item => {
+  findById = (id: string): Item => {
     return this.repository.findById(id);
   };
 
@@ -26,7 +26,7 @@ export class ItemService {
     return this.repository.update(item)
   };
 
-  delete = (id: number): Boolean => {
+  delete = (id: string): Boolean => {
      return this.repository.delete(id)
   };
 }
