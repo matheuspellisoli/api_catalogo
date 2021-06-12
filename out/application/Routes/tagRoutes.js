@@ -17,12 +17,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagRoutes = void 0;
 var routes_1 = require("./routes");
-var tag_1 = require("../../domain/Model/tag");
+var tagDTO_1 = require("../dto/tagDTO");
+var tagConverter_1 = require("../converter/tagConverter");
 var TagRoutes = /** @class */ (function (_super) {
     __extends(TagRoutes, _super);
     function TagRoutes(app, tagService) {
         var _this = _super.call(this, app, 'tags') || this;
         _this.tagService = tagService;
+        _this.tagCoverter = new tagConverter_1.TagConverter();
         return _this;
     }
     TagRoutes.prototype.configureRoutes = function () {
@@ -33,8 +35,8 @@ var TagRoutes = /** @class */ (function (_super) {
         })
             .post(function (req, res) {
             try {
-                var tag = new tag_1.Tag(null, req.body.description, req.body.type, req.body.active);
-                tag = _this.tagService.create(tag);
+                var tag = new tagDTO_1.TagDTO(null, req.body.description, req.body.type, req.body.active);
+                tag = _this.tagCoverter.toDTO(_this.tagService.create(_this.tagCoverter.toModel(tag)));
                 res.status(200).send(tag);
             }
             catch (e) {
@@ -56,8 +58,8 @@ var TagRoutes = /** @class */ (function (_super) {
             res.status(404).send('resource not found');
         })
             .put(function (req, res) {
-            var tag = new tag_1.Tag(req.body.id, req.body.description, req.body.type, req.body.active);
-            tag = _this.tagService.update(tag);
+            var tag = new tagDTO_1.TagDTO(req.body.id, req.body.description, req.body.type, req.body.active);
+            tag = _this.tagCoverter.toDTO(_this.tagService.create(_this.tagCoverter.toModel(tag)));
             res.status(200).send(tag);
         })
             .delete(function (req, res) {

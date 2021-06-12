@@ -1,14 +1,17 @@
 import {Routes} from './routes';
 import {TagTypeService} from "../../domain/Service/tagTypeService"
-import {TagType} from '../../domain/Model/tagType'
+import {TagTypeDTO} from '../dto/tagTypeDTO'
 import express from 'express';
+import { TagTypeConverter } from '../converter/tagTypeConverter';
 
 export class TagTypeRoutes extends Routes {
-    tagTypeService : TagTypeService;
+    private tagTypeService : TagTypeService;
+    private tagTypeConvert : TagTypeConverter;
 
     constructor(app: express.Application,tagTypeService : TagTypeService) {
         super(app, 'tagTypes');
         this.tagTypeService = tagTypeService;
+        this.tagTypeConvert = new TagTypeConverter();
     }
 
     configureRoutes() {        
@@ -20,8 +23,8 @@ export class TagTypeRoutes extends Routes {
             
             try {  
                 
-                let tagType = new TagType(null, req.body.description,req.body.visible);                
-                tagType = this.tagTypeService.create(tagType)
+                let tagType = new TagTypeDTO(null, req.body.description,req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);                
+                tagType = this.tagTypeConvert.toDTO(this.tagTypeService.create(this.tagTypeConvert.toModel(tagType)))
                 res.status(200).send(tagType);              
               } catch (e) {
                 console.error(e);
@@ -45,8 +48,8 @@ export class TagTypeRoutes extends Routes {
             res.status(404).send('resource not found');
         })
         .put((req: express.Request, res: express.Response) => {           
-            let tagType = new TagType(req.body.id, req.body.description,req.body.visible);
-            tagType = this.tagTypeService.update(tagType)
+            let tagType = new TagTypeDTO(req.body.id, req.body.description,req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);                
+            tagType = this.tagTypeConvert.toDTO(this.tagTypeService.create(this.tagTypeConvert.toModel(tagType)))
             res.status(200).send(tagType);
         })
         .delete((req: express.Request, res: express.Response) => {

@@ -14,7 +14,7 @@ var TagTypeService = /** @class */ (function () {
             return _this.repository.create(tagType);
         };
         this.update = function (tagType) {
-            if (tagType.id == null)
+            if (tagType.getId() == null)
                 return null;
             return _this.repository.update(tagType);
         };

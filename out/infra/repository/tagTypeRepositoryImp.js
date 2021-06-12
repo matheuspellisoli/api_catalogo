@@ -1,29 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagTypeRepositoryImp = void 0;
+var tagType_1 = require("../../domain/Model/tagType");
 var TagTypeRepositoryImp = /** @class */ (function () {
     function TagTypeRepositoryImp() {
         this.items = [
-            {
-                id: 1,
-                description: "cor",
-                visible: true
-            }
+            new tagType_1.TagType(1, "Cor", true, false, "", true),
+            new tagType_1.TagType(2, "Tamanho", true, true, "P,M,G,GG", true)
         ];
     }
     TagTypeRepositoryImp.prototype.findAll = function () {
         return this.items;
     };
     TagTypeRepositoryImp.prototype.findById = function (id) {
-        return this.items.filter(function (i) { return i.id == id; })[0];
+        return this.items.filter(function (i) { return i.getId() == id; })[0];
     };
     TagTypeRepositoryImp.prototype.create = function (item) {
-        item.id = this.items.length + 1;
         this.items.push(item);
         return item;
     };
     TagTypeRepositoryImp.prototype.update = function (item) {
-        this.items[this.items.findIndex(function (i) { return i.id == item.id; })] = item;
+        this.items[this.items.findIndex(function (i) { return i.getId() == item.getId(); })] = item;
         return item;
     };
     TagTypeRepositoryImp.prototype.delete = function (id) {
@@ -31,7 +28,7 @@ var TagTypeRepositoryImp = /** @class */ (function () {
         if (!item) {
             return false;
         }
-        delete this.items[this.items.findIndex(function (item) { return item.id == id; })];
+        delete this.items[this.items.findIndex(function (item) { return item.getId() == id; })];
         return true;
     };
     return TagTypeRepositoryImp;

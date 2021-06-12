@@ -14,7 +14,7 @@ var ItemService = /** @class */ (function () {
             return _this.repository.create(item);
         };
         this.update = function (item) {
-            if (item.id == null)
+            if (item.getId() == null)
                 return null;
             return _this.repository.update(item);
         };

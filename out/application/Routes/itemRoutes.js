@@ -17,12 +17,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemRoutes = void 0;
 var routes_1 = require("./routes");
-var item_1 = require("../../domain/Model/item");
+var itemDTO_1 = require("../dto/itemDTO");
+var itemConverter_1 = require("../converter/itemConverter");
 var ItemRoutes = /** @class */ (function (_super) {
     __extends(ItemRoutes, _super);
     function ItemRoutes(app, itemService) {
         var _this = _super.call(this, app, 'items') || this;
         _this.itemService = itemService;
+        _this.itemConvert = new itemConverter_1.itemConverter();
         return _this;
     }
     ItemRoutes.prototype.configureRoutes = function () {
@@ -33,8 +35,8 @@ var ItemRoutes = /** @class */ (function (_super) {
         })
             .post(function (req, res) {
             try {
-                var item = new item_1.Item(null, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);
-                item = _this.itemService.create(item);
+                var item = new itemDTO_1.ItemDTO(null, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);
+                item = _this.itemConvert.toDTO(_this.itemService.create(_this.itemConvert.toModel(item)));
                 res.status(200).send(item);
             }
             catch (e) {
@@ -56,8 +58,8 @@ var ItemRoutes = /** @class */ (function (_super) {
             res.status(404).send('resource not found');
         })
             .put(function (req, res) {
-            var item = new item_1.Item(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);
-            item = _this.itemService.update(item);
+            var item = new itemDTO_1.ItemDTO(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);
+            item = _this.itemConvert.toDTO(_this.itemService.create(_this.itemConvert.toModel(item)));
             res.status(200).send(item);
         })
             .delete(function (req, res) {

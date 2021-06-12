@@ -1,14 +1,17 @@
 import {Routes} from './routes';
 import {TagService} from "../../domain/Service/tagService"
-import {Tag} from '../../domain/Model/tag'
+import {TagDTO} from '../dto/tagDTO'
 import express from 'express';
+import { TagConverter } from '../converter/tagConverter';
 
 export class TagRoutes extends Routes {
-    tagService : TagService;
-
+    private tagService : TagService;
+    private tagCoverter : TagConverter;
+    
     constructor(app: express.Application,tagService : TagService) {
         super(app, 'tags');
         this.tagService = tagService;
+        this.tagCoverter = new TagConverter();
     }
 
     configureRoutes() {        
@@ -20,8 +23,8 @@ export class TagRoutes extends Routes {
             
             try {  
                 
-                let tag = new Tag(null, req.body.description,req.body.type, req.body.active);                
-                tag = this.tagService.create(tag)
+                let tag = new TagDTO(null, req.body.description,req.body.type, req.body.active);                
+                tag = this.tagCoverter.toDTO(this.tagService.create(this.tagCoverter.toModel(tag)))
                 res.status(200).send(tag);              
               } catch (e) {
                 console.error(e);
@@ -45,8 +48,8 @@ export class TagRoutes extends Routes {
             res.status(404).send('resource not found');
         })
         .put((req: express.Request, res: express.Response) => {           
-            let tag = new Tag(req.body.id, req.body.description,req.body.type, req.body.active); 
-            tag = this.tagService.update(tag)
+            let tag = new TagDTO(req.body.id, req.body.description,req.body.type, req.body.active); 
+            tag = this.tagCoverter.toDTO(this.tagService.create(this.tagCoverter.toModel(tag)))
             res.status(200).send(tag);
         })
         .delete((req: express.Request, res: express.Response) => {

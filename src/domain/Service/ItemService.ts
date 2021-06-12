@@ -21,7 +21,7 @@ export class ItemService {
   };
 
   update = (item: Item): Item => {
-    if(item.id == null)
+    if(item.getId() == null)
       return null;
     return this.repository.update(item)
   };

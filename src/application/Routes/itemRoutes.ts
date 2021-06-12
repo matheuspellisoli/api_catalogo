@@ -1,14 +1,17 @@
 import {Routes} from './routes';
 import {ItemService} from "../../domain/Service/ItemService"
-import {Item} from '../../domain/Model/item'
+import {ItemDTO} from '../dto/itemDTO'
 import express from 'express';
+import { itemConverter } from '../converter/itemConverter';
 
 export class ItemRoutes extends Routes {
-    itemService : ItemService;
+    private itemService : ItemService;
+    private itemConvert : itemConverter;
 
     constructor(app: express.Application,itemService : ItemService) {
         super(app, 'items');
         this.itemService = itemService;
+        this.itemConvert = new itemConverter();
     }
 
     configureRoutes() {        
@@ -19,8 +22,8 @@ export class ItemRoutes extends Routes {
         .post((req: express.Request, res: express.Response) => {
             
             try {  
-                let item = new Item(null, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);                
-                item = this.itemService.create(item)
+                let item = new ItemDTO(null, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);                
+                item = this.itemConvert.toDTO(this.itemService.create(this.itemConvert.toModel(item)));
                 res.status(200).send(item);              
               } catch (e) {
                 console.error(e);
@@ -44,8 +47,8 @@ export class ItemRoutes extends Routes {
             res.status(404).send('resource not found');
         })
         .put((req: express.Request, res: express.Response) => {           
-            let item = new Item(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);                
-            item = this.itemService.update(item)
+            let item = new ItemDTO(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);                
+            item = this.itemConvert.toDTO(this.itemService.create(this.itemConvert.toModel(item)));
             res.status(200).send(item);
         })
         .delete((req: express.Request, res: express.Response) => {

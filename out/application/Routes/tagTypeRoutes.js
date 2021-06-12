@@ -17,12 +17,14 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagTypeRoutes = void 0;
 var routes_1 = require("./routes");
-var tagType_1 = require("../../domain/Model/tagType");
+var tagTypeDTO_1 = require("../dto/tagTypeDTO");
+var tagTypeConverter_1 = require("../converter/tagTypeConverter");
 var TagTypeRoutes = /** @class */ (function (_super) {
     __extends(TagTypeRoutes, _super);
     function TagTypeRoutes(app, tagTypeService) {
         var _this = _super.call(this, app, 'tagTypes') || this;
         _this.tagTypeService = tagTypeService;
+        _this.tagTypeConvert = new tagTypeConverter_1.TagTypeConverter();
         return _this;
     }
     TagTypeRoutes.prototype.configureRoutes = function () {
@@ -33,8 +35,8 @@ var TagTypeRoutes = /** @class */ (function (_super) {
         })
             .post(function (req, res) {
             try {
-                var tagType = new tagType_1.TagType(null, req.body.description, req.body.visible);
-                tagType = _this.tagTypeService.create(tagType);
+                var tagType = new tagTypeDTO_1.TagTypeDTO(null, req.body.description, req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);
+                tagType = _this.tagTypeConvert.toDTO(_this.tagTypeService.create(_this.tagTypeConvert.toModel(tagType)));
                 res.status(200).send(tagType);
             }
             catch (e) {
@@ -56,8 +58,8 @@ var TagTypeRoutes = /** @class */ (function (_super) {
             res.status(404).send('resource not found');
         })
             .put(function (req, res) {
-            var tagType = new tagType_1.TagType(req.body.id, req.body.description, req.body.visible);
-            tagType = _this.tagTypeService.update(tagType);
+            var tagType = new tagTypeDTO_1.TagTypeDTO(req.body.id, req.body.description, req.body.visible, req.body.list, req.body.listvalues, req.body.visible.active);
+            tagType = _this.tagTypeConvert.toDTO(_this.tagTypeService.create(_this.tagTypeConvert.toModel(tagType)));
             res.status(200).send(tagType);
         })
             .delete(function (req, res) {

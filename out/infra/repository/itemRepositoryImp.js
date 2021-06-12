@@ -1,44 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemRepositoryImp = void 0;
+var item_1 = require("../../domain/Model/item");
+var tag_1 = require("../../domain/Model/tag");
+var tagType_1 = require("../../domain/Model/tagType");
 var ItemRepositoryImp = /** @class */ (function () {
     function ItemRepositoryImp() {
+        this.tags = [new tag_1.Tag(1, "Azul", new tagType_1.TagType(1, "Cor", true, false, "", true), true),
+            new tag_1.Tag(2, "G", new tagType_1.TagType(2, "Tamanho", true, true, "P,M,G,GG", true), true)];
+        this.imgs = ["https://cdn.auth0.com/blog/whatabyte/burger-sm.png"];
         this.items = [
-            {
-                id: 1,
-                title: "item 1",
-                description: "um belo item",
-                price: 10.7,
-                tags: [
-                    {
-                        id: 1,
-                        description: "Azul",
-                        type: {
-                            id: 1,
-                            description: "cor",
-                            visible: true
-                        },
-                        active: true
-                    }
-                ],
-                images: ["https://cdn.auth0.com/blog/whatabyte/burger-sm.png"],
-                active: true
-            }
+            new item_1.Item(1, "casaco", "um belo casaco", 149.99, this.tags, this.imgs, true)
         ];
     }
     ItemRepositoryImp.prototype.findAll = function () {
         return this.items;
     };
     ItemRepositoryImp.prototype.findById = function (id) {
-        return this.items.filter(function (i) { return i.id == id; })[0];
+        return this.items.filter(function (i) { return i.getId() == id; })[0];
     };
     ItemRepositoryImp.prototype.create = function (item) {
-        item.id = this.items.length + 1;
         this.items.push(item);
         return item;
     };
     ItemRepositoryImp.prototype.update = function (item) {
-        this.items[this.items.findIndex(function (i) { return i.id == item.id; })] = item;
+        this.items[this.items.findIndex(function (i) { return i.getId() == item.getId(); })] = item;
         return item;
     };
     ItemRepositoryImp.prototype.delete = function (id) {
@@ -46,7 +32,7 @@ var ItemRepositoryImp = /** @class */ (function () {
         if (!item) {
             return false;
         }
-        delete this.items[this.items.findIndex(function (item) { return item.id == id; })];
+        delete this.items[this.items.findIndex(function (item) { return item.getId() == id; })];
         return true;
     };
     return ItemRepositoryImp;

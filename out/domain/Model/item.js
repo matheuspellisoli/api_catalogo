@@ -11,6 +11,27 @@ var Item = /** @class */ (function () {
         this.images = images;
         this.active = active;
     }
+    Item.prototype.getId = function () {
+        return this.id;
+    };
+    Item.prototype.getTitle = function () {
+        return this.title;
+    };
+    Item.prototype.getDescription = function () {
+        return this.description;
+    };
+    Item.prototype.getPrice = function () {
+        return this.price;
+    };
+    Item.prototype.getTags = function () {
+        return this.tags;
+    };
+    Item.prototype.getImages = function () {
+        return this.images;
+    };
+    Item.prototype.isActive = function () {
+        return this.active;
+    };
     return Item;
 }());
 exports.Item = Item;

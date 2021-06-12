@@ -14,7 +14,7 @@ var TagService = /** @class */ (function () {
             return _this.repository.create(tag);
         };
         this.update = function (tag) {
-            if (tag.id == null)
+            if (tag.getId() == null)
                 return null;
             return _this.repository.update(tag);
         };

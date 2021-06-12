@@ -1,34 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TagRepositoryImp = void 0;
+var tag_1 = require("../../domain/Model/tag");
+var tagType_1 = require("../../domain/Model/tagType");
 var TagRepositoryImp = /** @class */ (function () {
     function TagRepositoryImp() {
         this.items = [
-            {
-                id: 1,
-                description: "Azul",
-                type: {
-                    id: 1,
-                    description: "cor",
-                    visible: true
-                },
-                active: true
-            }
+            new tag_1.Tag(1, "Azul", new tagType_1.TagType(1, "Cor", true, false, "", true), true),
+            new tag_1.Tag(2, "G", new tagType_1.TagType(2, "Tamanho", true, true, "P,M,G,GG", true), true)
         ];
     }
     TagRepositoryImp.prototype.findAll = function () {
         return this.items;
     };
     TagRepositoryImp.prototype.findById = function (id) {
-        return this.items.filter(function (i) { return i.id == id; })[0];
+        return this.items.filter(function (i) { return i.getId() == id; })[0];
     };
     TagRepositoryImp.prototype.create = function (item) {
-        item.id = this.items.length + 1;
         this.items.push(item);
         return item;
     };
     TagRepositoryImp.prototype.update = function (item) {
-        this.items[this.items.findIndex(function (i) { return i.id == item.id; })] = item;
+        this.items[this.items.findIndex(function (i) { return i.getId() == item.getId(); })] = item;
         return item;
     };
     TagRepositoryImp.prototype.delete = function (id) {
@@ -36,7 +29,7 @@ var TagRepositoryImp = /** @class */ (function () {
         if (!item) {
             return false;
         }
-        delete this.items[this.items.findIndex(function (item) { return item.id == id; })];
+        delete this.items[this.items.findIndex(function (item) { return item.getId() == id; })];
         return true;
     };
     return TagRepositoryImp;

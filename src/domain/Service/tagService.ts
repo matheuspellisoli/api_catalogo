@@ -21,7 +21,7 @@ export class TagService {
   };
 
   update =  (tag: Tag): Tag  => {
-    if(tag.id == null)
+    if(tag.getId()  == null)
       return null;
 
     return this.repository.update(tag)
