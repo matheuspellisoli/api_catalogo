@@ -7,6 +7,7 @@ var tagType_1 = require("../../domain/Model/tagType");
 var ItemRepositoryImp = /** @class */ (function () {
     function ItemRepositoryImp() {
         this.tags = [new tag_1.Tag("a6123396-e45b-4f68-96aa-f4ce72e1d933", "Azul", new tagType_1.TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "Cor", true, false, "", true), true),
+            new tag_1.Tag("03f6b13c-6e6b-4b8a-bb1f-8cfc903bcd59", "Vermelho", new tagType_1.TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "Cor", true, false, "", true), true),
             new tag_1.Tag("76805e39-f653-4f7b-9fa5-0ff795cac5fe", "G", new tagType_1.TagType("bf97d25a-36b9-40d7-83f1-809469de3ce4", "Tamanho", true, true, "P,M,G,GG", true), true)];
         this.imgs = ["https://cdn.auth0.com/blog/whatabyte/burger-sm.png"];
         this.items = [
@@ -26,6 +27,18 @@ var ItemRepositoryImp = /** @class */ (function () {
     ItemRepositoryImp.prototype.update = function (item) {
         this.items[this.items.findIndex(function (i) { return i.getId() == item.getId(); })] = item;
         return item;
+    };
+    ItemRepositoryImp.prototype.search = function (value) {
+        var itemsFilter = [];
+        this.items.map(function (item) {
+            if (item.getDescription().toLowerCase().includes(value.toLowerCase()))
+                itemsFilter.push(item);
+            else if (item.getTitle().toLowerCase().includes(value.toLowerCase()))
+                itemsFilter.push(item);
+            else if (item.getTags().filter(function (tag) { return tag.getvalue().toLowerCase().includes(value.toLowerCase()); }).length > 0)
+                itemsFilter.push(item);
+        });
+        return itemsFilter;
     };
     ItemRepositoryImp.prototype.delete = function (id) {
         var item = this.findById(id);

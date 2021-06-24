@@ -23,6 +23,9 @@ var ItemService = /** @class */ (function () {
         };
         this.repository = repository;
     }
+    ItemService.prototype.search = function (value) {
+        return this.repository.search(value);
+    };
     return ItemService;
 }());
 exports.ItemService = ItemService;

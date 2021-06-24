@@ -1,8 +1,8 @@
 import {Routes} from './routes';
-import {TagService} from "../../domain/Service/tagService"
-import {TagDTO} from '../dto/tagDTO'
+import {TagService} from "../domain/Service/tagService"
+import {TagDTO} from '../application/dto/tagDTO'
 import express from 'express';
-import { TagConverter } from '../converter/tagConverter';
+import { TagConverter } from '../application/converter/tagConverter';
 import {v4 as uuidv4} from 'uuid';
 
 export class TagRoutes extends Routes {
@@ -47,7 +47,7 @@ export class TagRoutes extends Routes {
         })
         .put((req: express.Request, res: express.Response) => {           
             let tag = new TagDTO(req.body.id, req.body.value,req.body.type, req.body.active); 
-            tag = this.tagCoverter.toDTO(this.tagService.create(this.tagCoverter.toModel(tag)))
+            tag = this.tagCoverter.toDTO(this.tagService.update(this.tagCoverter.toModel(tag)))
             res.status(200).send(tag);
         })
         .delete((req: express.Request, res: express.Response) => {

@@ -1,5 +1,5 @@
 import {Item} from "../Model/item";
-import {ItemRepository} from "../interfaces/itemRepository";
+import {ItemRepository} from "../repository/itemRepository";
 
 export class ItemService {
   repository : ItemRepository;
@@ -29,4 +29,8 @@ export class ItemService {
   delete = (id: string): Boolean => {
      return this.repository.delete(id)
   };
+
+  search(value: string): Item[] {
+    return this.repository.search(value);
+  }
 }

@@ -17,8 +17,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ItemRoutes = void 0;
 var routes_1 = require("./routes");
-var itemDTO_1 = require("../dto/itemDTO");
-var itemConverter_1 = require("../converter/itemConverter");
+var itemDTO_1 = require("../application/dto/itemDTO");
+var itemConverter_1 = require("../application/converter/itemConverter");
 var uuid_1 = require("uuid");
 var ItemRoutes = /** @class */ (function (_super) {
     __extends(ItemRoutes, _super);
@@ -57,13 +57,17 @@ var ItemRoutes = /** @class */ (function (_super) {
         })
             .put(function (req, res) {
             var item = new itemDTO_1.ItemDTO(req.body.id, req.body.title, req.body.description, req.body.price, req.body.tags, req.body.images, req.body.active);
-            item = _this.itemConvert.toDTO(_this.itemService.create(_this.itemConvert.toModel(item)));
+            item = _this.itemConvert.toDTO(_this.itemService.update(_this.itemConvert.toModel(item)));
             res.status(200).send(item);
         })
             .delete(function (req, res) {
             var id = "" + req.params.itemID;
             _this.itemService.delete(id);
             res.status(200).send("DELETE requested for id " + req.params.itemID);
+        });
+        this.app.route("/api/item/search/:value")
+            .get(function (req, res) {
+            res.status(200).send(Object.values(_this.itemService.search("" + req.params.value)));
         });
         return this.app;
     };

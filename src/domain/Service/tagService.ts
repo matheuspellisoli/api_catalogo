@@ -1,5 +1,5 @@
 import {Tag} from "../Model/tag";
-import {TagRepository} from "../interfaces/tagRepository";
+import {TagRepository} from "../repository/tagRepository";
 
 export class TagService {
   repository : TagRepository;

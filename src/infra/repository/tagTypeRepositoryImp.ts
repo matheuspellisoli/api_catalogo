@@ -1,4 +1,4 @@
-import {TagTypesRepository} from "../../domain/interfaces/tagTypesRepository" 
+import {TagTypesRepository} from "../../domain/repository/tagTypesRepository" 
 import { TagType } from "../../domain/Model/tagType";
 
 export class TagTypeRepositoryImp implements TagTypesRepository {

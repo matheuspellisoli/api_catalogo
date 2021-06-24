@@ -1,5 +1,5 @@
 import {TagType} from "../Model/tagType";
-import {TagTypesRepository} from "../interfaces/tagTypesRepository";
+import {TagTypesRepository} from "../repository/tagTypesRepository";
 
 export class TagTypeService {
 

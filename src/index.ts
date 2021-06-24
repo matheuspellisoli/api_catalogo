@@ -9,12 +9,10 @@ import helmet from "helmet";
 import { errorHandler } from "./middleware/errorMiddleware";
 import { notFoundHandler } from "./middleware/notFoundMiddleware";
 
-import {Routes} from './application/Routes/routes';
-import {ItemRoutes} from './application/Routes/itemRoutes';
-import {TagRoutes} from './application/Routes/tagRoutes';
-import {TagTypeRoutes} from './application/Routes/tagTypeRoutes';
+import {Routes} from './Routes/routes';
+import {TagRoutes} from './Routes/tagRoutes';
+import {TagTypeRoutes} from './Routes/tagTypeRoutes';
 
-import {ItemRepositoryImp} from "./infra/repository/itemRepositoryImp"
 import {ItemService} from "./domain/Service/ItemService"
 
 import {TagRepositoryImp} from "./infra/repository/tagRepositoryImp"
@@ -22,6 +20,11 @@ import {TagService} from "./domain/Service/tagService"
 
 import {TagTypeRepositoryImp} from "./infra/repository/tagTypeRepositoryImp"
 import {TagTypeService} from "./domain/Service/tagTypeService"
+import { ItemRoutes } from "./Routes/itemRoutes";
+import { UserRoutes } from "./Routes/userRoutes";
+import { UserService } from "./domain/Service/userService";
+import { UserRepositoryImp } from "./infra/repository/userRepositoryImp";
+import { ItemRepositoryImp } from "./infra/repository/itemRepositoryImp";
 
 dotenv.config();
 
@@ -37,6 +40,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+routes.push(new UserRoutes(app, new UserService(new UserRepositoryImp())));
 routes.push(new ItemRoutes(app, new ItemService(new ItemRepositoryImp())));
 routes.push(new TagRoutes(app, new TagService(new TagRepositoryImp())));
 routes.push(new TagTypeRoutes(app, new TagTypeService(new TagTypeRepositoryImp())));
