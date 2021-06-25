@@ -5,14 +5,18 @@ import { TagType } from "../../domain/Model/tagType";
 
 export class ItemRepositoryImp implements ItemRepository {
     
-    tags : Tag[] = [new Tag("a6123396-e45b-4f68-96aa-f4ce72e1d933", "Azul", new TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "Cor", true, false, "", true),true),
-    new Tag("03f6b13c-6e6b-4b8a-bb1f-8cfc903bcd59", "Vermelho", new TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "Cor", true, false, "", true),true),   
-    new Tag("76805e39-f653-4f7b-9fa5-0ff795cac5fe", "G", new TagType("bf97d25a-36b9-40d7-83f1-809469de3ce4", "Tamanho", true, true, "P,M,G,GG", true),true)];
+    tags : Tag[] = [new Tag("a6123396-e45b-4f68-96aa-f4ce72e1d933", "Chaves", new TagType("cca10c75-6728-452f-8843-7a4425f3dfc1", "tipo", true, false, "", true),true),];
 
-    imgs: string[] = ["https://cdn.auth0.com/blog/whatabyte/burger-sm.png"];
+    imgs: string[] = ["https://img.lojadomecanico.com.br/IMAGENS/2/301/110860/Jogo-100-pecas-Chaves-de-Fenda-Phillips--fortgpro-fg81931.JPG"];
   
     items: Item[] = [
-    new Item("18ec39f5-c2c8-4a95-9931-38482dcd48f7", "casaco", "um belo casaco", 149.99, this.tags, this.imgs, true)
+    new Item("18ec39f5-c2c8-4a95-9931-38482dcd48f7",
+     "Jogo 100 Chaves",
+      "O Jogo com 100 de Chaves de Fenda e Phillips FORTG PRO FG8193", 
+      149.99, 
+      this.tags, 
+      this.imgs,
+       true)
     ];
     
     findAll(): Item[] {
